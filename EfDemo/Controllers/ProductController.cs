@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using EfDemo.Models;
+using System.CodeDom;
 
 namespace EfDemo.Controllers
 {
@@ -7,9 +9,19 @@ namespace EfDemo.Controllers
     [Route("[controller]")]
     public class ProductController : Controller
     {
-        public IActionResult Index()
+        private readonly DairyDbContext _dairyContext;
+
+        public ProductController(DairyDbContext dairyContext)
         {
-            return View();
+            _dairyContext = dairyContext;
+        }
+       
+
+        // GET: api/products
+        [HttpGet]
+        public  IEnumerable<ProductModel> GetProducts()
+        {
+            return  _dairyContext.Products.ToList();
         }
     }
 }
